@@ -1,0 +1,526 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font: 20px Verdana;
+}
+
+body {
+  min-height: 100vh;
+  background: aliceblue;
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  background: cadetblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-left: -90px;
+}
+
+.logo-img {
+  height: 40px; /* Ajusta conforme necessário */
+  width: auto;
+}
+
+.logo-text {
+  font-size: 32px;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  margin-left: 10px; /* Move apenas o texto */
+}
+
+.navbar a {
+  position: relative;
+  font-size: 18px;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 40px;
+}
+
+.navbar a::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: .3s;
+}
+
+.navbar a:hover::before {
+  width: 100%;
+}
+
+.hero {
+  height: auto;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  margin-top: 80px;
+  /* compensa a altura do header, se necessário */
+}
+
+.texto_slogan {
+  font: Verdana;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, cadetblue, rgb(135, 206, 235));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px, 2px, 4px, rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transform: translateY(130px);
+}
+
+
+/* Secção de Apresentação */
+.apresentacao {
+  padding: 60px 20px;
+  /* Espaço para separar a secção das restantes */
+  text-align: center;
+  background-color: #F0F8FF;
+  opacity: 0;
+  /* começa invisível */
+  transform: translateY(50px);
+  /* ligeiro deslocamento para baixo */
+  transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+  min-height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-top: 220px;
+  margin-bottom: 100px;
+}
+
+.apresentacao.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.apresentacao .conteudo {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.apresentacao h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: cadetblue;
+  /*Mantém a ligação com o header*/
+}
+
+.apresentacao p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.carousel {
+  padding: 0;
+  background-color: #f8f8f8;
+  /* Ajusta conforme o design global */
+}
+
+.carousel-container {
+  display: flex;
+  overflow-x: scroll;
+  /* Força a barra de scroll a estar sempre visível */
+  scroll-snap-type: x mandatory;
+  gap: 20px;
+  padding-bottom: 20px;
+  -webkit-overflow-scrolling: touch;
+  /* Rolagem suave em dispositivos móveis */
+}
+
+.carousel-container::-webkit-scrollbar {
+  height: 8px;
+  /* Altura da scrollbar horizontal */
+}
+
+.carousel-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.carousel-container::-webkit-scrollbar-thumb {
+  background: cadetblue;
+  border-radius: 4px;
+}
+
+/* Oculta a scrollbar em navegadores WebKit
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }*/
+
+.card {
+  flex: 0 0 85vw;
+  /* Cada cartão ocupa toda a largura da viewport */
+  display: flex;
+  align-items: center;
+  scroll-snap-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Área da imagem */
+.card-image {
+  flex: 1;
+  max-width: 50%;
+  padding-right: 20px;
+}
+
+.card-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Conteúdo textual */
+.card-content {
+  flex: 1;
+  max-width: 50%;
+  text-align: left;
+}
+
+.card-content h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: cadetblue;
+}
+
+.card-content p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: cadetblue;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background: skyblue;
+}
+
+.tutorial {
+  padding: 100px 20px;
+  background-color: aliceblue;
+  text-align: center;
+}
+
+.tutorial .container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.tutorial h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: cadetblue;
+}
+
+.tutorial-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tutorial-step {
+  flex: 1;
+  min-width: 500px;
+  margin: 20px;
+  padding: 20px;
+  background: #F8F8F8;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.tutorial-step h3 {
+  font-size: 1.5rem;
+  color: cadetblue;
+  margin-bottom: 10px;
+}
+
+.tutorial-step p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.tutorial-video {
+  text-align: center;
+}
+
+.tutorial-video iframe {
+  width: 80%;
+  height: 450px;
+  max-width: 800px;
+  border: none;
+  border-radius: 10px;
+}
+
+.footer {
+  background: cadetblue;
+  color: white;
+  padding: 40px 20px;
+  font-family: Verdana, sans-serif;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Topo do Footer: logo e informações */
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-left {
+  flex: 1;
+  transform: translateY(60px);
+  min-width: 200px;
+}
+
+.footer-logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+}
+
+.footer-center {
+  flex: 2;
+  min-width: 300px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-center .footer-info {
+  margin: 10px;
+  max-width: 500px;
+}
+
+.footer-center .footer-info h3 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.footer-center .footer-info p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.footer-right {
+  flex: 2;
+  min-width: 300px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-right .footer-info {
+  margin: 10px;
+  max-width: 500px;
+}
+
+.footer-right .footer-info h3 {
+  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.footer-right .footer-info p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Rodapé inferior: ícones e copyright */
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-social {
+  display: flex;
+  gap: 15px;
+}
+
+.footer-social a {
+  color: white;
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover {
+  color: skyblue;
+}
+
+.icon-portfolio {
+  width: 60px;
+  height: auto;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+
+/* Área do simulador */
+.simulator {
+  padding: 40px 20px;
+  background: aliceblue;
+  margin-top: 80px;
+}
+
+/* Grelha principal com duas colunas para entrada e visualização */
+.simulator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  background: #F0F8FF;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 40px;
+}
+
+/* Área de entrada de dados */
+.simulator-input {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* sombra sutil para dar destaque */
+}
+
+.simulator-input h2{
+  margin-bottom: 15px;
+  color: cadetblue;
+}
+
+.simulator-input form {
+  display: flex;
+  flex-direction: column;
+}
+
+.simulator-input label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.simulator-input input {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.simulator-input .btn {
+  margin-top: 20px;
+  padding: 10px;
+  background: cadetblue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.simulator-input .btn:hover {
+  background: skyblue;
+}
+
+/* Área gráfica da simulação */
+.simulator-graphic {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* sombra sutil para dar destaque */
+}
+
+.simulator-graphic h2 {
+  margin-bottom: 15px;
+  color: cadetblue;
+}
+
+/* Estilização do Canvas - torna-o mais apelativo */
+.simulator-graphic canvas {
+  border: 2px solid cadetblue;
+  border-radius: 5px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* efeito de profundidade interna */
+}
+
+/* Resultados e Histórico */
+.simulation-results {
+  display: block;
+  width: 100%;
+  background: #F8F8F8;
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.simulation-characteristics,
+.simulation-history {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.simulation-characteristics h3,
+.simulation-history h3 {
+  margin-bottom: 10px;
+  color: cadetblue;
+}
+
+.simulation-history ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.simulation-history ul li {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}

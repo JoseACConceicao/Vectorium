@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="simulacao_Rev1.css" />
+  <link rel="stylesheet" href="fontawsome/css/all.min.css">
+  <title>Vectorium - Lançamento Oblíquo</title>
+</head>
+<body>
+  <!-- Cabeçalho mantido -->
+  <header class="header">
+    <a href="index.html" class="logo-container">
+            <img src="imagens/logotipo.png" alt="vectorium Logo" class="logo-img">
+            <span class="logo-text">Vectorium</span>
+    </a>
+    <nav class="navbar">
+      <a href="Simulacao_Rev1_Lancamento_Obliquo.html">Lançamento Oblíquo</a>
+      <a href="Simulacao_Rev1_Lancamento_Horizontal.html">Lançamento Horizontal</a>
+      <a href="Simulacao_Rev1_Lancamento_Vertical.html">Lançamento Vertical</a>
+    </nav>
+  </header>
+  
+  <!-- Área do simulador -->
+  <main class="simulator">
+    <section class="simulator-grid">
+      <!-- Área de entrada de dados -->
+      <div class="simulator-input">
+        <h2>Parâmetros da Simulação</h2>
+        <form id="oblique-form">
+          <label for="inicial-velocity">Velocidade Inicial (m/s):</label>
+          <input type="number" id="inicial-velocity" name="inicial-velocity" step="any" required>
+          
+          <label for="inicial-height">Altura Inicial (m):</label>
+          <input type="number" id="inicial-height" name="inicial-height" step="any" required>
+          
+          <label for="launch-angle">Ângulo de Lançamento (°):</label>
+          <input type="number" id="launch-angle" name="launch-angle" step="any" required>
+          
+          <label for="final-height">Altura Final (m):</label>
+          <input type="number" id="final-height" name="final-height" step="any" required>
+          
+          <button type="submit" class="btn">Simular</button>
+        </form>
+      </div>
+      
+      <!-- Área gráfica da simulação -->
+      <div class="simulator-graphic">
+        <h2>Lançamento Oblíquo</h2>
+        <canvas id="simulationCanvas"></canvas>
+      </div>
+    </section>
+    
+    <!-- Resultados e Histórico -->
+    <section class="simulation-results">
+      <div class="simulation-characteristics">
+        <h3>Características da Simulação</h3>
+        <p>Tempo de Voo: <span id="flight-time">0</span> s</p>
+        <p>Distância Horizontal: <span id="horizontal-distance">0</span> m</p>
+        <p>Altura Máxima: <span id="max-height">0</span> m</p>
+      </div>
+      <div class="simulation-history">
+        <h3>Histórico de Simulações</h3>
+        <ul id="history-list">
+          <!-- Itens adicionados via JavaScript -->
+        </ul>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer (mantido similar aos outros simuladores) -->
+  <footer class="footer">
+    <div class="footer-top container">
+      <div class="footer-left">
+        <a href="index.html" class="footer-logo">Vectorium</a>
+      </div>
+      <div class="footer-center">
+        <div class="footer-info">
+          <h3>Sobre o Vectorium</h3>
+          <p>O Vectorium é uma plataforma interativa que te permite explorar os princípios da física através de simulações de lançamentos oblíquos, horizontais e verticais.</p>
+        </div>
+      </div>
+      <div class="footer-right">
+        <div class="footer-info">
+          <h3>Sobre o Developer</h3>
+          <p>O Vectorium foi criado por um estudante de física do 12º ano. É, por isso, um projeto educacional.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <div class="footer-social">
+        <a href="https://instagram.com/joseafonsocunhaconceicao/" target="_blank" rel="noopener">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://portfolio.co.tumo.world/p/7jovlzpn810e4m2q46d5e6mg2r3x54yw" target="_blank" rel="noopener">
+          <img src="imagens/tumo.svg" alt="Portfolio Tumo" class="icon-portfolio">
+        </a>
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 Vectorium. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Script para simulação oblíqua -->
+  <script>
+    const form = document.getElementById('oblique-form');
+    const canvas = document.getElementById('simulationCanvas');
+    const flightTimeEl = document.getElementById('flight-time');
+    const distanceEl = document.getElementById('horizontal-distance');
+    const maxHeightEl = document.getElementById('max-height');
+    const historyList = document.getElementById('history-list');
+    const ctx = canvas.getContext('2d');
+
+    // Define dimensões do canvas
+    canvas.width = 600;
+    canvas.height = 400;
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Captura dos valores do formulário
+      const v0 = parseFloat(document.getElementById('inicial-velocity').value);
+      const h0 = parseFloat(document.getElementById('inicial-height').value);
+      const angleDeg = parseFloat(document.getElementById('launch-angle').value);
+      const hFinal = parseFloat(document.getElementById('final-height').value);
+      const g = 9.81;
+      
+      // Converter ângulo para radianos
+      const theta = angleDeg * Math.PI / 180;
+      
+      // Calcula discriminante para o tempo de voo: resolve h0 + v0*sin(theta)*t - 0.5*g*t^2 = hFinal
+      const discriminant = Math.pow(v0 * Math.sin(theta), 2) + 2 * g * (h0 - hFinal);
+      if (discriminant < 0) {
+        alert("Parâmetros inválidos: verifique os valores de altura e ângulo.");
+        return;
+      }
+      const flightTime = (v0 * Math.sin(theta) + Math.sqrt(discriminant)) / g;
+      
+      // Distância horizontal
+      const horizontalDistance = v0 * Math.cos(theta) * flightTime;
+      
+      // Altura máxima
+      const maxHeightComputed = v0 * Math.sin(theta) > 0 ? h0 + Math.pow(v0 * Math.sin(theta), 2) / (2 * g) : h0;
+      
+      // Validação: se o lançamento é para cima, hFinal deve ser inferior ou igual à altura máxima
+      if (v0 * Math.sin(theta) > 0 && hFinal > maxHeightComputed) {
+        alert(`A altura final deve ser inferior ou igual à altura máxima do lançamento (${maxHeightComputed.toFixed(2)} m).`);
+        return;
+      }
+      
+      // Atualiza resultados na interface
+      flightTimeEl.textContent = flightTime.toFixed(2);
+      distanceEl.textContent = horizontalDistance.toFixed(2);
+      maxHeightEl.textContent = maxHeightComputed.toFixed(2);
+      
+      // Adiciona ao histórico
+      const li = document.createElement('li');
+      li.textContent = `v0: ${v0} m/s, h0: ${h0} m, ângulo: ${angleDeg}°, h_f: ${hFinal} m, Tempo: ${flightTime.toFixed(2)} s, Distância: ${horizontalDistance.toFixed(2)} m, Altura Máxima: ${maxHeightComputed.toFixed(2)} m`;
+      historyList.appendChild(li);
+      
+      // Parâmetros para desenho no canvas
+      const leftMargin = 50;
+      const rightMargin = 50;
+      const groundY = canvas.height - 50;  // Considera 0 m = chão
+      const topMargin = 50;
+      
+      // Para a escala vertical, mapeamos de 0 m até maxHeightComputed para o espaço entre topMargin e groundY.
+      // Se hFinal for diferente de 0, queremos que a posição correspondente a hFinal seja exibida corretamente:
+      const scaleY = (groundY - topMargin) / maxHeightComputed;
+      
+      // Escala horizontal: se horizontalDistance for pequeno, usar um limite máximo fixo para evidenciar variações.
+      const maxDisplayDistance = 100; // em metros
+      let scaleX;
+      if (horizontalDistance <= maxDisplayDistance) {
+        scaleX = (canvas.width - leftMargin - rightMargin) / maxDisplayDistance;
+      } else {
+        scaleX = (canvas.width - leftMargin - rightMargin) / horizontalDistance;
+      }
+      
+      let startTime = null;
+      function animateTrajectory(timestamp) {
+        if (!startTime) startTime = timestamp;
+        let elapsed = (timestamp - startTime) / 1000;
+        const t = Math.min(elapsed, flightTime);
+        
+        // Limpa o canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Desenha a linha do "chão" (0 m)
+        ctx.beginPath();
+        ctx.moveTo(leftMargin, groundY);
+        ctx.lineTo(canvas.width - rightMargin, groundY);
+        ctx.strokeStyle = "#ccc";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        
+        // Desenha a trajetória até o instante atual
+        ctx.beginPath();
+        // Ponto inicial: (xSim = 0, ySim = h0)
+        ctx.moveTo(leftMargin, groundY - (h0 * scaleY));
+        const steps = 100;
+        for (let i = 1; i <= steps; i++) {
+          const ti = t * i / steps;
+          const xSim = v0 * Math.cos(theta) * ti;
+          const ySim = h0 + v0 * Math.sin(theta) * ti - 0.5 * g * ti * ti;
+          const xCanvas = leftMargin + (xSim * scaleX);
+          const yCanvas = groundY - (ySim * scaleY);
+          ctx.lineTo(xCanvas, yCanvas);
+        }
+        ctx.strokeStyle = "cadetblue";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Desenha o objeto (círculo) na posição atual
+        const currentXSim = v0 * Math.cos(theta) * t;
+        const currentYSim = h0 + v0 * Math.sin(theta) * t - 0.5 * g * t * t;
+        const currentXCanvas = leftMargin + (currentXSim * scaleX);
+        const currentYCanvas = groundY - (currentYSim * scaleY);
+        ctx.beginPath();
+        ctx.arc(currentXCanvas, currentYCanvas, 8, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        
+        if (t < flightTime) {
+          requestAnimationFrame(animateTrajectory);
+        }
+      }
+      
+      requestAnimationFrame(animateTrajectory);
+    });
+  </script>
+</body>
+</html>
