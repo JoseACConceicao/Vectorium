@@ -25,12 +25,24 @@ body {
   z-index: 100;
 }
 
-.logo {
+.logo-container {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-left: -90px;
+}
+
+.logo-img {
+  height: 40px; /* Ajusta conforme necessário */
+  width: auto;
+}
+
+.logo-text {
   font-size: 32px;
   color: white;
   text-decoration: none;
   font-weight: 700;
-  margin-left: -90px;
+  margin-left: 10px; /* Move apenas o texto */
 }
 
 .navbar a {
